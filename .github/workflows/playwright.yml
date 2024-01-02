@@ -19,24 +19,17 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+    - uses: actions/upload-artifact@v3
+      if: always()
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: playwright-report/  # The folder the action should deploy.
-        CLEAN: true  # Automatically remove deleted files from the deployment.
-
- #   - uses: actions/upload-artifact@v3
- #     if: always()
- #     with:
- #       name: playwright-report
- #       path: playwright-report/
- #       retention-days: 30
- #   - name: Setup Pages
- #     uses: actions/configure-pages@v2
- #   - name: Upload artifact
- #     uses: actions/upload-pages-artifact@v1
- #   - name: Deploy to Github Pages
- #     id: deployment
- #     uses: actions/deploy-pages@v2
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: playwright-report/
+        publish_branch: gh-pages
+        keep_files: false
