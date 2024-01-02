@@ -1,17 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { time } from 'console';
 
-test.describe('Playwright example', () => {
+test.describe('playwright example', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('https://playwright.dev/');
   });
 
-  test('title', async ({ page }) => {
+  test('check page title', async ({ page }) => {
     await expect(page).toHaveTitle(/Playwright/);
   });
 
-  test('get started link', async ({ page }) => {
+  test('getting started link', async ({ page }) => {
 
     // Click the get started link.
     await page.getByRole('link', { name: 'Get started' }).click();
@@ -31,6 +30,15 @@ test.describe('Playwright example', () => {
       // Expects page to have a heading with the name of Installation.
       await expect(page.getByRole('heading', { name: 'Welcome' })).toBeVisible();
   });
+
+  test('api link', async ({ page }) => {
+        
+        // Click the api link.
+        await page.getByRole('link', { name: 'API',exact:true }).click();
+    
+        // Expects page to have a heading with the name of Installation.
+        await expect(page.getByRole('heading', { name: /Playwright Library/ })).toBeVisible();
+    });
 
 
 });
