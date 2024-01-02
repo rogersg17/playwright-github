@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('title', async ({ page }) => {
-  await expect(page).toHaveTitle(/Playwright/);
+  await expect(page).toHaveTitle(/Playright/);
 });
 
 test('get started link', async ({ page }) => {
